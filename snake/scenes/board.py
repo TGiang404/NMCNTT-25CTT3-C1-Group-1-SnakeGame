@@ -10,7 +10,6 @@ class GameScene(SceneBase):
         self.hud_h = app.cfg.hud_h
         self.font_score = try_load_font(24) 
         self.background_image = self.app.images.get("game_bg")
-
     def handle(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -25,6 +24,18 @@ class GameScene(SceneBase):
                 elif event.key in (pygame.K_RIGHT, pygame.K_d):
                     self.game.turn((1, 0))
 
+    def draw_grid(self, screen):
+        color = self.cfg.grid_line
+        # 1. Vẽ các đường dọc
+        for x in range(self.cfg.grid_w):
+            px = x * self.cell_size
+            pygame.draw.line(screen, color, (px, self.hud_h), (px, self.cfg.height))
+        # 2. Vẽ các đường ngang
+        for y in range(self.cfg.grid_h):
+            py = self.hud_h + y * self.cell_size
+            # Vẽ từ trái sang phải
+            pygame.draw.line(screen, color, (0, py), (self.cfg.width, py))
+
     def update(self):
         self.game.update()
 
@@ -33,6 +44,8 @@ class GameScene(SceneBase):
             screen.blit(self.background_image, (0, 0))
         else:
             screen.fill(self.cfg.bg_color)
+           
+        self.draw_grid(screen)
         hud_surface = pygame.Surface((self.cfg.width, self.hud_h), pygame.SRCALPHA)
         hud_surface.fill((20, 20, 30, 200)) 
         screen.blit(hud_surface, (0,0))

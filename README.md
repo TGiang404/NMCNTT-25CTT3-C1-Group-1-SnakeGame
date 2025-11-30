@@ -1,6 +1,0 @@
-﻿# NMCNTT-25CTT3-C1-Group-1-SnakeGame
-
-![alt text](https://github.com/TGiang404/NMCNTT-25CTT3-C1-Group-1-SnakeGame/blob/main/gantt_diagram.jpg)
-<img width="975" height="827" alt="menu" src="https://github.com/user-attachments/assets/739d1ea8-3aa2-4aa9-a470-a3ed8cdd13fd" />
-<img width="985" height="827" alt="console" src="https://github.com/user-attachments/assets/334e5a01-fa0a-41fb-a6dd-974adcb875dd" />
-<img width="982" height="828" alt="gameover" src="https://github.com/user-attachments/assets/496ac3f6-62b8-4df5-9265-f096684b6624" />

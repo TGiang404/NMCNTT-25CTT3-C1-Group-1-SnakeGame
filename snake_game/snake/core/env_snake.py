@@ -41,37 +41,35 @@ class Play:
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
-                    if self.Huong == 1:
-                        Pos_Head_new = (self.Vec[0][0], self.Vec[0][1] - 1)
-                        self.Huong = 3
-                    else:
-                        if self.Huong == 2:
-                            Pos_Head_new = (self.Vec[0][0], self.Vec[0][1] + 1)
-                            self.Huong = 4
-                        else:
-                            if self.Huong == 3:
-                                Pos_Head_new = (self.Vec[0][0] - 1, self.Vec[0][1])
-                                self.Huong = 2
-                            else:
-                                Pos_Head_new = (self.Vec[0][0] + 1, self.Vec[0][1])
-                                self.Huong = 1
-                elif event.key == pygame.K_d:
-                    if self.Huong == 1:
-                        Pos_Head_new = (self.Vec[0][0], self.Vec[0][1] + 1)
-                        self.Huong = 4
-                    else:
-                        if self.Huong == 2:
-                            Pos_Head_new = (self.Vec[0][0], self.Vec[0][1] - 1)
-                            self.Huong = 3
-                        else:
-                            if self.Huong == 3:
-                                Pos_Head_new = (self.Vec[0][0] + 1, self.Vec[0][1])
-                                self.Huong = 1
-                            else:
-                                Pos_Head_new = (self.Vec[0][0] - 1, self.Vec[0][1])
-                                self.Huong = 2
+                if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.Huong != 4:
+                    self.Huong = 3
+                
+                elif (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self.Huong != 3:
+                    self.Huong = 4
+                
+                elif (event.key == pygame.K_a or event.key == pygame.K_LEFT) and self.Huong != 1:
+                    self.Huong = 2
+                
+                elif (event.key == pygame.K_d or event.key == pygame.K_RIGHT) and self.Huong != 2:
+                    self.Huong = 1
 
+
+        Pos_Head_new = (0, 0)
+        
+
+        current_head_x = self.Vec[0][0]
+        current_head_y = self.Vec[0][1]
+
+        if self.Huong == 1: # Phải
+            Pos_Head_new = (current_head_x + 1, current_head_y)
+        elif self.Huong == 2: # Trái
+            Pos_Head_new = (current_head_x - 1, current_head_y)
+        elif self.Huong == 3: # Lên
+            Pos_Head_new = (current_head_x, current_head_y - 1)
+        elif self.Huong == 4: # Xuống
+            Pos_Head_new = (current_head_x, current_head_y + 1)
+
+        # Cập nhật con rắn
         self.Vec.insert(0, Pos_Head_new)
         self.Vec.pop()
 
@@ -109,7 +107,7 @@ class Play:
         self.xi, self.yi = self.Take_Item_pos()
 
         while running:
-            clock.tick(1.5 + len(self.Vec) // 15)
+            clock.tick(5 + len(self.Vec) // 15)
 
             GRAPHIC = Graphic(self.screen, self.Vec, self.xi, self.yi)
 

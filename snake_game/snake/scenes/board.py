@@ -36,9 +36,14 @@ class Graphic:
                 else:
                     pygame.draw.circle(self.screen, GREEN, (x + 25, y + 25), 20)
 
+    def display_Score(self):
+        font = pygame.font.SysFont("Consolas", 35, bold=True)
+        score_value = len(self.Vec) - 3
+        score_surf = font.render(f"Score: {score_value}", True, (255, 255, 255))
+        self.screen.blit(score_surf, (20, 10))
+
     def display_EndGame(self):
         font_title = pygame.font.SysFont("Consolas", 60, bold=True)
-        #font_msg = pygame.font.Font("assets/fonts/PressStart2P-Regular.ttf", 20)
         font_msg = pygame.font.SysFont("Consolas", 60, bold=True)
         width = 1000
         height = 650
@@ -46,22 +51,18 @@ class Graphic:
         overlay.fill((0, 0, 0, 180))
         self.screen.blit(overlay, (0, 0))
 
-        # Tiêu đề
         title_surf = font_title.render("GAME OVER", True, (255, 80, 80))
         title_rect = title_surf.get_rect(center=(width // 2,
                                                 height // 2 - 40))
 
-        # Nội dung
         msg_surf = font_msg.render("Press ESC to return to menu", True, (255, 255, 255))
         msg_rect = msg_surf.get_rect(center=(width // 2,
                                             height // 2 + 50))
 
-        # Khung hộp
         box_rect = title_rect.union(msg_rect).inflate(60, 40)
         pygame.draw.rect(self.screen, (0, 0, 0), box_rect, border_radius=12)
         pygame.draw.rect(self.screen, (255, 80, 80), box_rect, width=3, border_radius=12)
 
-        # Vẽ chữ
         self.screen.blit(title_surf, title_rect)
         self.screen.blit(msg_surf, msg_rect)
         pygame.display.flip()
@@ -72,6 +73,7 @@ class Graphic:
         self.display_Table()
         self.display_Item()
         self.display_Snake()
+        self.display_Score()
         pygame.display.flip()
 
 

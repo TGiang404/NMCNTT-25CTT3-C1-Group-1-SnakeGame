@@ -1,6 +1,8 @@
 import pygame
 import random
 import sys
+import math
+import numpy as np
 from snake.scenes.board import Graphic
 class Play:
     def __init__(self, screen, Vec = [], Huong = 1, xi = -1, yi = -1):
@@ -19,6 +21,80 @@ class Play:
         self.Vec.append((2,1))
         self.Vec.append((1,1))
         self.Huong = 1
+
+
+    def is_Collision(self, flag=None):
+        if flag is None:
+            flag = self.Vec[0]
+        x, y = flag;
+        if X > 18 or x<1 or y>11 or y<1:
+            return True
+        if flag in self.Vec[1]:
+            return True
+        return False
+    
+    def AI_move(self, action):
+        head_x, head_y = self.Vec[0]
+        old_distance = math.sqrt((head_x - self.xi)**2 + (head_y - self.yi)**2)
+
+        for event in pygame.event.get():
+            pygame.quit()
+            sys.exit()
+
+        clock_wise = [1, 4, 2, 3]
+        idx = clock_wise.index(self.Huong)
+
+        if np.array_equal(action, [1, 0, 0]):
+            new_dir = clock_wise[idx]
+        elif np.array_equal(action, [0, 1, 0]):
+            next_idx = (idx + 1) % 4
+            new_dir = clock_wise[next_idx]
+        else: 
+            next_idx = (idx - 1) % 4
+            new_dir = clock_wise[next_idx]
+
+        self.Huong = new_dir
+
+        current_head_x = self.Vec[0][0]
+        current_head_y = self.Vec[0][1]
+        
+        Pos_Head_new = (0,0)
+        if self.Huong == 1: Pos_Head_new = (current_head_x + 1, current_head_y)
+        elif self.Huong == 2: Pos_Head_new = (current_head_x - 1, current_head_y)
+        elif self.Huong == 3: Pos_Head_new = (current_head_x, current_head_y - 1)
+        elif self.Huong == 4: Pos_Head_new = (current_head_x, current_head_y + 1)
+
+        self.Vec.insert(0, Pos_Head_new)
+    
+        new_head_x, new_head_y = self.Vec[0]
+        new_distance = math.sqrt((new_head_x - self.xi)**2 + (new_head_y - self.yi)**2)
+
+        # 3. Tính Reward dựa trên khoảng cách
+        reward = 0
+        game_over = False
+        
+        if self.is_collision() or len(self.Vec) > 100:
+            game_over = True
+            reward = -10 #phạt khi chết
+            return reward, game_over, len(self.Vec) - 3
+
+        if self.Vec[0] == (self.xi, self.yi):
+            reward = 10 # Thưởng lớn nếu ăn mồi
+            self.xi, self.yi = self.Take_random_pos()
+            while (self.xi, self.yi) in self.Vec:
+                 self.xi, self.yi = self.Take_random_pos()
+        else:
+            self.Vec.pop()
+            if new_distance < old_distance:
+                reward = 1  
+            else:
+                reward = -1.5
+            
+        GRAPHIC = Graphic(self.screen, self.Vec, self.xi, self.yi)
+        GRAPHIC.display_Game()
+        return reward, game_over, len(self.Vec) - 3
+
+
 
     def Update_Pos(self):
         Pos_Head_new = (0, 0)

@@ -19,12 +19,17 @@ class Play:
         self.xi = -1
         self.yi = -1
 
+        # Cho phép đổi hướng 1 lần mỗi bước di chuyển
+        self.direction_changed_this_step = False
+
     def reset_Game(self):
         self.Vec = []
         self.Vec.append((3,1))
         self.Vec.append((2,1))
         self.Vec.append((1,1))
         self.Huong = 1
+        
+        self.direction_changed_this_step = False
 
     def is_Collision(self, flag=None):
         if flag is None:
@@ -32,7 +37,7 @@ class Play:
         x, y = flag
         if x > self.limit_x or x < 1 or y > self.limit_y or y < 1:
             return True
-        if flag in self.Vec[1]:
+        if flag in self.Vec[1:]:
             return True
         return False
     
@@ -100,15 +105,26 @@ class Play:
                 pygame.quit()
                 sys.exit()
 
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN and not self.direction_changed_this_step:
+                changed = False
+
                 if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.Huong != 4:
-                    self.Huong = 3
+                    self.Huong = 3   # lên
+                    changed = True
                 elif (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self.Huong != 3:
-                    self.Huong = 4
+                    self.Huong = 4   # xuống
+                    changed = True
                 elif (event.key == pygame.K_a or event.key == pygame.K_LEFT) and self.Huong != 1:
-                    self.Huong = 2
+                    self.Huong = 2   # trái
+                    changed = True
                 elif (event.key == pygame.K_d or event.key == pygame.K_RIGHT) and self.Huong != 2:
-                    self.Huong = 1
+                    self.Huong = 1   # phải
+                    changed = True
+
+                if changed:
+                    self.direction_changed_this_step = True
+                    # XÓA HẾT KEYDOWN CÒN LẠI TRONG HÀNG ĐỢI
+                    pygame.event.clear(pygame.KEYDOWN)
 
         current_head_x = self.Vec[0][0]
         current_head_y = self.Vec[0][1]
@@ -119,8 +135,9 @@ class Play:
         elif self.Huong == 3: Pos_Head_new = (current_head_x, current_head_y - 1)
         elif self.Huong == 4: Pos_Head_new = (current_head_x, current_head_y + 1)
 
-        self.Vec.insert(0, Pos_Head_new)
         self.Vec.pop()
+        self.Vec.insert(0, Pos_Head_new)
+        # self.Vec.pop()
 
     def End_Game(self):
         if (self.Vec[0][0] > self.limit_x): return True
@@ -152,6 +169,9 @@ class Play:
         self.reset_Game()
         self.xi, self.yi = self.Take_Item_pos()
         while running:
+            # Mỗi bước di chuyển, reset lại: cho phép đổi hướng 1 lần
+            self.direction_changed_this_step = False
+
             current_speed = self.cfg.FPS + (len(self.Vec) // 5) 
             clock.tick(current_speed)
             GRAPHIC = Graphic(self.screen, self.Vec, self.xi, self.yi)

@@ -2,7 +2,6 @@ import pygame
 import random
 import sys
 import math
-import numpy as np
 from snake.scenes.board import Graphic
 from snake.settings import Settings
 

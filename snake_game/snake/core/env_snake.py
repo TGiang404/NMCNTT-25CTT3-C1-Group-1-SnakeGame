@@ -16,6 +16,7 @@ class Play:
         self.Vec.append((3,1))
         self.Vec.append((2,1))
         self.Huong = 1
+        self.pre_Huong = 1
         self.xi = -1
         self.yi = -1
 
@@ -28,8 +29,7 @@ class Play:
         self.Vec.append((2,1))
         self.Vec.append((1,1))
         self.Huong = 1
-        
-        self.direction_changed_this_step = False
+        self.pre_Huong = 1
 
     def is_Collision(self, flag=None):
         if flag is None:
@@ -100,31 +100,26 @@ class Play:
         return reward, game_over, len(self.Vec) - 3
 
     def Update_Pos(self):
+        move_lock = False 
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-            if event.type == pygame.KEYDOWN and not self.direction_changed_this_step:
-                changed = False
-
-                if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.Huong != 4:
-                    self.Huong = 3   # lên
-                    changed = True
-                elif (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self.Huong != 3:
-                    self.Huong = 4   # xuống
-                    changed = True
-                elif (event.key == pygame.K_a or event.key == pygame.K_LEFT) and self.Huong != 1:
-                    self.Huong = 2   # trái
-                    changed = True
-                elif (event.key == pygame.K_d or event.key == pygame.K_RIGHT) and self.Huong != 2:
-                    self.Huong = 1   # phải
-                    changed = True
-
-                if changed:
-                    self.direction_changed_this_step = True
-                    # XÓA HẾT KEYDOWN CÒN LẠI TRONG HÀNG ĐỢI
-                    pygame.event.clear(pygame.KEYDOWN)
+            if event.type == pygame.KEYDOWN and not move_lock:
+                if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.pre_Huong != 4:
+                    self.Huong = 3
+                    move_lock = True 
+                elif (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self.pre_Huong != 3:
+                    self.Huong = 4
+                    move_lock = True
+                elif (event.key == pygame.K_a or event.key == pygame.K_LEFT) and self.pre_Huong != 1:
+                    self.Huong = 2
+                    move_lock = True
+                elif (event.key == pygame.K_d or event.key == pygame.K_RIGHT) and self.pre_Huong != 2:
+                    self.Huong = 1
+                    move_lock = True
 
         current_head_x = self.Vec[0][0]
         current_head_y = self.Vec[0][1]
@@ -134,11 +129,9 @@ class Play:
         elif self.Huong == 2: Pos_Head_new = (current_head_x - 1, current_head_y)
         elif self.Huong == 3: Pos_Head_new = (current_head_x, current_head_y - 1)
         elif self.Huong == 4: Pos_Head_new = (current_head_x, current_head_y + 1)
-
-        self.Vec.pop()
         self.Vec.insert(0, Pos_Head_new)
-        # self.Vec.pop()
-
+        self.Vec.pop()
+        self.pre_Huong = self.Huong
     def End_Game(self):
         if (self.Vec[0][0] > self.limit_x): return True
         if (self.Vec[0][0] < 1): return True

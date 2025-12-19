@@ -141,6 +141,8 @@ class Menu:
                 if btn_Human.Click(event):
                     game = Play(self.screen)
                     game.Play_Game()
+                    pygame.mouse.set_pos((self.cfg.SCREEN_WIDTH, self.cfg.SCREEN_HEIGHT))
+                    pygame.event.clear()
                 
                 if btn_AI.Click(event):
                     pass

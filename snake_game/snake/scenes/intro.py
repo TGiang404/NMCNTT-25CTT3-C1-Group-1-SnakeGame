@@ -1,7 +1,8 @@
 import pygame
 import sys
 from snake.core.env_snake import Play
-from snake.settings import Settings 
+from snake.settings import Settings
+
 
 pygame.init()
 
@@ -40,7 +41,37 @@ class Menu:
         self.screen = screen
         self.cfg = Settings()
         self.center_x = self.cfg.SCREEN_WIDTH // 2
-
+    def ai_menu_run(self):
+        running = True
+        btn_w = 400
+        btn_h = 60
+        btn_x = self.center_x - (btn_w // 2)
+        gap = 80
+        start_y = 250
+        from snake.rl.train_dqn import train
+        while running:
+            self.screen.fill((15, 15, 30)) 
+            font_title = pygame.font.SysFont("Consolas", 60, bold=True)
+            title = font_title.render("AI MODE SELECTION", True, self.cfg.TEXT_COLOR)
+            title_rect = title.get_rect(center=(self.center_x, 100))
+            self.screen.blit(title, title_rect)
+            btn_Train = Button(self.screen, "Train New Model", 0, (btn_x, start_y, btn_w, btn_h))
+            btn_Watch = Button(self.screen, "Watch Best AI", 0, (btn_x, start_y + gap, btn_w, btn_h))
+            btn_Back  = Button(self.screen, "Back", 0, (btn_x, start_y + gap * 2, btn_w, btn_h))
+            btn_Train.draw()
+            btn_Watch.draw()
+            btn_Back.draw()
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit(); sys.exit()
+                if btn_Train.Click(event):
+                    train(training_mode=True)
+                if btn_Watch.Click(event):
+                    train(training_mode=False)
+                if btn_Back.Click(event):
+                    running = False 
+                    pygame.event.clear()
     def options_run(self):
         running = True
         btn_w = 400
@@ -143,10 +174,8 @@ class Menu:
                     game.Play_Game()
                 
                 if btn_AI.Click(event):
-                    pass
-
+                    self.ai_menu_run()
                 if btn_Option.Click(event):
                     self.options_run()
-
                 if btn_Exit.Click(event):
                     pygame.quit(); sys.exit()

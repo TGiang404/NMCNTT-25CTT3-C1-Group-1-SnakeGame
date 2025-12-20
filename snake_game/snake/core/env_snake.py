@@ -2,6 +2,7 @@ import pygame
 import random
 import sys
 import math
+import numpy as np
 from snake.scenes.board import Graphic
 from snake.settings import Settings
 
@@ -17,8 +18,7 @@ class Play:
         self.Vec.append((2,1))
         self.Huong = 1
         self.pre_Huong = 1
-        self.xi = -1
-        self.yi = -1
+        self.xi, self.yi = self.Take_Item_pos()
 
     def reset_Game(self):
         self.Vec = []
@@ -27,17 +27,23 @@ class Play:
         self.Vec.append((1,1))
         self.Huong = 1
         self.pre_Huong = 1
+        self.xi, self.yi = self.Take_Item_pos()
 
     def is_Collision(self, flag=None):
-        if flag is None:
-            flag = self.Vec[0]
-        x, y = flag
-        if x > self.limit_x or x < 1 or y > self.limit_y or y < 1:
-            return True
-        if flag in self.Vec[1]:
-            return True
-        return False
+     if flag is None:
+        flag = self.Vec[0] # Lấy đầu hiện tại
     
+     x, y = flag
+    
+    # 1. Kiểm tra va chạm biên (tường)
+     if x > self.limit_x or x < 1 or y > self.limit_y or y < 1:
+         return True
+    
+
+     if flag in self.Vec[1:]:
+         return True
+        
+     return False
 
     def AI_move(self, action):
         head_x, head_y = self.Vec[0]
@@ -131,16 +137,16 @@ class Play:
         self.Vec.pop()
         self.pre_Huong = self.Huong
     def End_Game(self):
-        if (self.Vec[0][0] > self.limit_x): return True
-        if (self.Vec[0][0] < 1): return True
-        if (self.Vec[0][1] < 1): return True
-        if (self.Vec[0][1] > self.limit_y): return True
+     head = self.Vec[0]
+    # Kiểm tra đâm tường
+     if head[0] > self.limit_x or head[0] < 1 or head[1] < 1 or head[1] > self.limit_y:
+        return True
 
-        for i in range(len(self.Vec)):
-            for j in range(i + 1, len(self.Vec)):
-                if (self.Vec[i] == self.Vec[j]):
-                    return True
-        return False
+    # Kiểm tra tự đâm vào mình
+     if head in self.Vec[1:]:
+        return True
+        
+     return False
     
     def Take_random_pos(self):
         x = random.randint(1, self.limit_x)

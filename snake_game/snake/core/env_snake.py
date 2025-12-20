@@ -20,6 +20,9 @@ class Play:
         self.pre_Huong = 1
         self.xi, self.yi = self.Take_Item_pos()
 
+        # Cho phép đổi hướng 1 lần mỗi bước di chuyển
+        self.direction_changed_this_step = False
+
     def reset_Game(self):
         self.Vec = []
         self.Vec.append((3,1))
@@ -132,7 +135,6 @@ class Play:
         elif self.Huong == 2: Pos_Head_new = (current_head_x - 1, current_head_y)
         elif self.Huong == 3: Pos_Head_new = (current_head_x, current_head_y - 1)
         elif self.Huong == 4: Pos_Head_new = (current_head_x, current_head_y + 1)
-
         self.Vec.insert(0, Pos_Head_new)
         self.Vec.pop()
         self.pre_Huong = self.Huong
@@ -166,6 +168,9 @@ class Play:
         self.reset_Game()
         self.xi, self.yi = self.Take_Item_pos()
         while running:
+            # Mỗi bước di chuyển, reset lại: cho phép đổi hướng 1 lần
+            self.direction_changed_this_step = False
+
             current_speed = self.cfg.FPS + (len(self.Vec) // 5) 
             clock.tick(current_speed)
             GRAPHIC = Graphic(self.screen, self.Vec, self.xi, self.yi)

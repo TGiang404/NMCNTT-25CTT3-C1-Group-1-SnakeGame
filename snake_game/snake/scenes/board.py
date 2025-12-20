@@ -50,14 +50,15 @@ class Graphic:
                 pygame.draw.circle(self.screen, self.cfg.SNAKE_BODY_COLOR, (center_x, center_y), radius)
 
     def display_Score(self):
-        font = pygame.font.SysFont("Consolas", 35, bold=True)
+        font = pygame.font.SysFont("Consolas", 30, bold=True)
         score_value = len(self.Vec) - 3
         score_surf = font.render(f"Score: {score_value}", True, self.cfg.TEXT_COLOR)
-        self.screen.blit(score_surf, (20, 10))
+        self.screen.blit(score_surf, (5, 5))
 
     def display_EndGame(self):
         font_title = pygame.font.SysFont("Consolas", 60, bold=True)
         font_msg = pygame.font.SysFont("Consolas", 30, bold=True) 
+        font_score = pygame.font.SysFont("Consolas", 30, bold=True)
         width = self.cfg.SCREEN_WIDTH
         height = self.cfg.SCREEN_HEIGHT
         
@@ -66,12 +67,16 @@ class Graphic:
         self.screen.blit(overlay, (0, 0))
 
         title_surf = font_title.render("GAME OVER", True, (255, 80, 80))
-        title_rect = title_surf.get_rect(center=(width // 2, height // 2 - 40))
+        title_rect = title_surf.get_rect(center=(width // 2, height // 2 - 50))
+
+        score_surf = font_score.render(f"YOUR SCORE: {len(self.Vec) - 3}", True, (255, 255, 102))
+        score_rect = score_surf.get_rect(center=(width // 2 - 15, height // 2 + 10))
 
         msg_surf = font_msg.render("Press ESC to return to menu", True, self.cfg.TEXT_COLOR)
-        msg_rect = msg_surf.get_rect(center=(width // 2, height // 2 + 50))
+        msg_rect = msg_surf.get_rect(center=(width // 2, height // 2 + 60))
 
         self.screen.blit(title_surf, title_rect)
+        self.screen.blit(score_surf, score_rect)
         self.screen.blit(msg_surf, msg_rect)
         pygame.display.flip()
 

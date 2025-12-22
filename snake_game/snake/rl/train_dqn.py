@@ -39,7 +39,7 @@ def train(training_mode=True):
         if os.path.exists(model_path):
             agent.model.load_state_dict(torch.load(model_path))
             agent.model.eval()
-            agent.n_games = 0
+            agent.n_games = 100
         else:
             print("LỖI: Không tìm thấy model.pth! Vui lòng Train trước.")
             return 

@@ -42,6 +42,30 @@ pip install -r requirements.txt
 ```text
 python main.py
 ```
+## 🧠 Kiến trúc Deep Learning 
+
+Mô hình sử dụng thuật toán **Deep Q-Learning (DQN)** với kiến trúc mạng nơ-ron truyền thẳng (Feed Forward). Dưới đây là cấu hình chi tiết:
+
+| Thành phần | Cấu hình / Giá trị | Mô tả kỹ thuật |
+| :--- | :--- | :--- |
+| **Kiến trúc mạng** | `Linear_QNet` | Mạng 3 lớp: Input -> Hidden -> Output. |
+| **Input Layer** | `11` Neurons | Vector trạng thái bao gồm: Hướng đi, Mối nguy hiểm kề bên, Vị trí mồi. |
+| **Hidden Layer** | `256` Neurons | Lớp ẩn sử dụng hàm kích hoạt **ReLU** để học dữ liệu phi tuyến tính. |
+| **Output Layer** | `3` Neurons | Đầu ra quyết định hành động: `[0,0,0]` tương ứng [Đi thẳng, Rẽ phải, Rẽ trái]. |
+| **Optimizer** | `Adam` | Thuật toán tối ưu hóa thích nghi (Adaptive Moment Estimation). |
+| **Loss Function** | `MSELoss` | Hàm mất mát Mean Squared Error (Bình phương trung bình sai số). |
+| **Learning Rate** | `0.001` | Tốc độ học của mô hình. |
+| **Gamma** | `0.9` | Hệ số chiết khấu (Discount factor), ưu tiên phần thưởng ngắn hạn hay dài hạn. |
+| **Batch Size** | `1000` | Số lượng mẫu được lấy ngẫu nhiên từ bộ nhớ để huấn luyện lại (Replay). |
+| **Memory** | `100,000` | Bộ nhớ đệm (Experience Replay) lưu trữ các bước đi trước đó. |
+
+---
+
+### ℹ️ Chi tiết Vector đầu vào (Input State - 11 tham số):
+1.  **Nguy hiểm (3):** Có tường hoặc thân mình ở phía trước, bên trái, hoặc bên phải không?
+2.  **Hướng đi (4):** Rắn đang đi hướng nào (Lên, Xuống, Trái, Phải)?
+3.  **Vị trí mồi (4):** Mồi đang ở phía nào so với đầu rắn (Lên, Xuống, Trái, Phải)?
+
 📂 Cấu trúc Dự án (Project Structure)
 ```text
 Snake-AI-Game/

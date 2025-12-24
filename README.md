@@ -108,6 +108,6 @@ Snake-AI-Game/
 | 5 | **Nguyễn Hoàng Huy** | 25120193 |
 | 6 | **Nguyễn Hoàng Tuấn Hưng** | 25120190 |
 
-**Intructor**: LÊ ĐỨC KHOAN
+**Intructor: LÊ ĐỨC KHOAN **
 ![grantt](https://github.com/user-attachments/assets/a37177e4-45be-4311-b1b0-56f2948fa776)
 

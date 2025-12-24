@@ -97,7 +97,7 @@ Snake-AI-Game/
 ```
 ## 👥 Danh sách Thành viên Nhóm
 
-**HCMUS-NHÓM 1-25CTT3A-GROUP BUG LỰC
+**HCMUS-NHÓM 1-25CTT3A-GROUP BUG LỰC**
 
 | STT | Họ và tên | MSSV |
 | :---: | :--- | :---: |

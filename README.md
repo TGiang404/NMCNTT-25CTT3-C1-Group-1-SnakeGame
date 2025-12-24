@@ -23,6 +23,48 @@ Màn hình xuất hiện khi lượt chơi kết thúc:
 * **Điều hướng:** Hướng dẫn người chơi nhấn phím `ESC` để quay trở lại Menu chính.
 <img width="985" height="586" alt="image" src="https://github.com/user-attachments/assets/51f61f87-6e96-42cf-96bc-c3a0d57294ec" />
 
+⚙️ Cài đặt & Hướng dẫn sử dụng
+Dự án sử dụng Python cùng các thư viện: Pygame (cho giao diện), PyTorch (cho Deep Learning), và NumPy (xử lý ma trận).
+
+Dưới đây là hướng dẫn thiết lập môi trường bằng Micromamba.
+
+1. Khởi tạo môi trường ảo (Virtual Environment)
+Mở terminal tại thư mục dự án và chạy các lệnh sau để tạo môi trường sạch:
+
+micromamba create -n snake_ai python=3.10 -c conda-forge
+micromamba activate snake_ai
+2. Cài đặt thư viện
+pip install -r requirements.txt
+3. Chạy game
+python main.py
+📂 Cấu trúc Dự án (Project Structure)
+Snake-AI-Game/
+│
+├── main.py                # File chạy chính của chương trình
+├── assets/                # Tài nguyên game (hình ảnh, âm thanh)
+│   └── images/            # Chứa ảnh nền menu (menu_bg.png)
+├── model/                 # Thư mục chứa file model đã train (model.pth)
+│
+└── snake/                 # Package chính của trò chơi
+    ├── __init__.py
+    ├── settings.py        # Các cấu hình chung (Màu sắc, FPS, Grid size)
+    │
+    ├── core/              # Xử lý logic cốt lõi
+    │   ├── __init__.py
+    │   └── env_snake.py   # Môi trường game, xử lý di chuyển, va chạm
+    │
+    ├── scenes/            # Giao diện hiển thị (UI)
+    │   ├── __init__.py
+    │   ├── intro.py       # Menu chính, nút bấm, chọn chế độ
+    │   └── board.py       # Vẽ đồ họa bàn chơi (Rắn, mồi, lưới)
+    │
+    └── rl/                # Reinforcement Learning (AI)
+        ├── __init__.py
+        ├── agent_dqn.py   # Agent AI xử lý hành động
+        ├── dqn_model.py   # Kiến trúc mạng nơ-ron (Linear_QNet)
+        ├── memory.py      # Bộ nhớ Replay Memory
+        └── train_dqn.py   # Vòng lặp huấn luyện AI
+
 
 
 ![grantt](https://github.com/user-attachments/assets/ae71c93e-6c1a-4a8d-a4fc-b80ce75bc269)

@@ -29,7 +29,7 @@ Dự án sử dụng Python cùng các thư viện: Pygame (cho giao diện), Py
 Dưới đây là hướng dẫn thiết lập môi trường bằng Micromamba.
 
 1. Khởi tạo môi trường ảo (Virtual Environment)
-Mở terminal tại thư mục dự án và chạy các lệnh sau để tạo môi trường sạch:
+Mở terminal tại thư mục dự án và chạy các lệnh sau để tạo môi trường:
 ```text
 micromamba create -n snake_ai python=3.10 -c conda-forge
 micromamba activate snake_ai
@@ -44,7 +44,7 @@ python main.py
 ```
 ## 🧠 Kiến trúc Deep Learning 
 
-Mô hình sử dụng thuật toán **Deep Q-Learning (DQN)** với kiến trúc mạng nơ-ron truyền thẳng (Feed Forward). Dưới đây là cấu hình chi tiết:
+Mô hình sử dụng thuật toán **Deep Q-Learning (DQN)** với kiến trúc mạng nơ-ron truyền thẳng (Feed Forward). Dưới đây là một số thiết lập trong source code:
 
 | Thành phần | Cấu hình / Giá trị | Mô tả kỹ thuật |
 | :--- | :--- | :--- |
@@ -88,7 +88,7 @@ Snake-AI-Game/
     │   ├── intro.py       # Menu chính, nút bấm, chọn chế độ
     │   └── board.py       # Vẽ đồ họa bàn chơi (Rắn, mồi, lưới)
     │
-    └── rl/                # Reinforcement Learning (AI)
+    └── rl/                # Mô hình huấn luyện (AI)
         ├── __init__.py
         ├── agent_dqn.py   # Agent AI xử lý hành động
         ├── dqn_model.py   # Kiến trúc mạng nơ-ron (Linear_QNet)

@@ -30,13 +30,18 @@ Dưới đây là hướng dẫn thiết lập môi trường bằng Micromamba.
 
 1. Khởi tạo môi trường ảo (Virtual Environment)
 Mở terminal tại thư mục dự án và chạy các lệnh sau để tạo môi trường sạch:
-
+```text
 micromamba create -n snake_ai python=3.10 -c conda-forge
 micromamba activate snake_ai
+```
 2. Cài đặt thư viện
+```text
 pip install -r requirements.txt
+```
 3. Chạy game
+```text
 python main.py
+```
 📂 Cấu trúc Dự án (Project Structure)
 ```text
 Snake-AI-Game/
@@ -66,3 +71,5 @@ Snake-AI-Game/
         ├── memory.py      # Bộ nhớ Replay Memory
         └── train_dqn.py   # Vòng lặp huấn luyện AI
 ```
+![grantt](https://github.com/user-attachments/assets/a37177e4-45be-4311-b1b0-56f2948fa776)
+

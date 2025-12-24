@@ -95,5 +95,19 @@ Snake-AI-Game/
         ├── memory.py      # Bộ nhớ Replay Memory
         └── train_dqn.py   # Vòng lặp huấn luyện AI
 ```
+## 👥 Danh sách Thành viên Nhóm
+
+**HCMUS-NHÓM 1-25CTT3A-GROUP BUG LỰC
+
+| STT | Họ và tên | MSSV |
+| :---: | :--- | :---: |
+| 1 | **Tăng Nguyễn Trường Giang** | 25120186 |
+| 2 | **Hoàng Kim Bảo** | 25120164 |
+| 3 | **Vũ Văn Duy** | 25120185 |
+| 4 | **Trần Nguyễn Gia Bảo** | 25120166 |
+| 5 | **Nguyễn Hoàng Huy** | 25120193 |
+| 6 | **Nguyễn Hoàng Tuấn Hưng** | 25120190 |
+
+**Intructor**: LÊ ĐỨC KHOAN
 ![grantt](https://github.com/user-attachments/assets/a37177e4-45be-4311-b1b0-56f2948fa776)
 

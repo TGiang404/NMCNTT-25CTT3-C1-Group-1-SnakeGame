@@ -38,6 +38,7 @@ pip install -r requirements.txt
 3. Chạy game
 python main.py
 📂 Cấu trúc Dự án (Project Structure)
+```text
 Snake-AI-Game/
 │
 ├── main.py                # File chạy chính của chương trình
@@ -64,7 +65,4 @@ Snake-AI-Game/
         ├── dqn_model.py   # Kiến trúc mạng nơ-ron (Linear_QNet)
         ├── memory.py      # Bộ nhớ Replay Memory
         └── train_dqn.py   # Vòng lặp huấn luyện AI
-
-
-
-![grantt](https://github.com/user-attachments/assets/ae71c93e-6c1a-4a8d-a4fc-b80ce75bc269)
+```
